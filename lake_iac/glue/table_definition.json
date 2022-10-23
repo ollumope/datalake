@@ -1,0 +1,81 @@
+{
+    "description": "Uber Movement's Travel Times provides cities average travel time calculations between two zones in a region for a given time and date",
+    "location_prefix": "/",
+    "columns": [
+        {"name": "Origin Movement ID",
+            "type":"string",
+            "comment":"Origin Movement ID",
+            "partition":false
+        },
+        {"name": "Origin Display Name",
+            "type":"string",
+            "comment":"",
+            "partition":false
+        },
+        {"name": "Origin Geometry",
+            "type":"string",
+            "comment":"Origin Display Name",
+            "partition":false
+        },
+        {"name": "Destination Movement ID",
+            "type":"string",
+            "comment":"Destination Movement ID",
+            "partition":false
+        },
+        {"name": "Destination Display Name",
+            "type":"string",
+            "comment":"Destination Display Name",
+            "partition":false
+        },
+        {"name": "Destination Geometry",
+            "type":"string",
+            "comment":"Destination Geometry",
+            "partition":false
+        },
+        {"name": "Date Range",
+            "type":"string",
+            "comment":"Date Range",
+            "partition":false
+        },
+        {"name": "Mean Travel Time (Seconds)",
+            "type":"float",
+            "comment":"Mean Travel Time (Seconds)",
+            "partition":false
+        },
+        {"name": "Range - Lower Bound Travel Time (Seconds)",
+            "type":"float",
+            "comment":"Range - Lower Bound Travel Time (Seconds)",
+            "partition":false
+        },
+        {
+            "name": "Range - Upper Bound Travel Time (Seconds)",
+            "type":"float",
+            "comment":"Range - Upper Bound Travel Time (Seconds)",
+            "partition":false
+        },
+        {
+            "name": "city",
+            "type":"string",
+            "comment":"file city",
+            "partition":true
+        },
+        {
+            "name": "month",
+            "type":"string",
+            "comment":"Month of first range date",
+            "partition":true
+        },
+        {
+            "name": "day",
+            "type":"string",
+            "comment":"Day of first range date",
+            "partition":true
+        },
+        {
+            "name": "year",
+            "type":"string",
+            "comment":"Year of first range date",
+            "partition":true
+        }
+    ]
+  }
