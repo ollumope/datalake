@@ -8,7 +8,6 @@ from lake_iac.bucket.s3_bucket import CreateBucket
 from lake_iac.iam.iam import CreatePermission
 from lake_iac.glue.glue_database import GlueArtifacts
 from lake_iac.glue.glue_job import GlueJobs
-from lake_iac.glue.glue_crawler import GlueCrawler
 from lake_iac.lambda_fn.lambda_fn import LambdaFunction
 
 class LakeStack(Stack):
@@ -44,15 +43,10 @@ class LakeStack(Stack):
                             role=role_glue.role_arn,
                             bucket=bucket_stage.bucket_name)
 
-        crawler = GlueCrawler(self, id='crawler_uber_movements', role=role_glue.role_arn,
-                              db_name=database.db_name, tb_name=database.tb_name,
-                              desc='Catalog uber tables', bucket=bucket_stage.bucket_name)
-
         LambdaFunction(self, identifier='lambda-function-initialize',
                        job_name=glue_job.job_name, role_arn=role_lambda.role_arn,
                        logger=logging,
                         bucket_raw=bucket_raw,
                         bucket_stage=bucket_stage.bucket_name,
                         db_name=database.db_name,
-                        tb_name=database.tb_name,
-                        crawler_name=crawler.name)
+                        tb_name=database.tb_name)

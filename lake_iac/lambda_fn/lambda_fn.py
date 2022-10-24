@@ -17,7 +17,6 @@ class LambdaFunction(Construct):
         bucket_stage:str,
         db_name:str,
         tb_name:str,
-        crawler_name:str,
         **kwargs):
 
         super().__init__(scope, identifier, **kwargs)
@@ -41,8 +40,7 @@ class LambdaFunction(Construct):
             'BUCKET_RAW':bucket_raw.bucket_name,
             'BUCKET_STAGE':bucket_stage,
             'DATABASE_NAME':db_name,
-            'TABLE_NAME':tb_name,
-            'CRAWLER_NAME': crawler_name
+            'TABLE_NAME':tb_name
             }
         logger.info(f'Creating lambda for glue job execution')
         lambda_fn = self.create_lambda_function(self.function_name, lambda_code_path, lambda_data, environment_variables)

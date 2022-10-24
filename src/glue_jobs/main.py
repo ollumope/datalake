@@ -21,7 +21,6 @@ class RawProcessing():
         self.glue_client = boto3.client('glue')
         self.aws_bucket_source = args['aws_bucket_source']
         self.aws_bucket_target = args['aws_bucket_target']
-        self.crawler_name = args['crawler_name']
         self.boto_session = boto3.session.Session(region_name='us-east-1')
         self.db = args['database']
         self.tb = args['table']
@@ -46,8 +45,7 @@ class RawProcessing():
             catalog_versioning=True,
             mode='overwrite_partitions',
             database=db,
-            table=tb,
-            table_type='EXTERNAL_TABLE'
+            table=tb
             )
 
     def read_csv_s3(self, aws_bucket, filename, sep=','):
@@ -58,11 +56,6 @@ class RawProcessing():
             index_col=False
             )
         return df
-    
-    def start_crawler(self, name):
-        self.glue_client.start_crawler(
-            Name=name
-)
 
     def processing_data(self):
         """
@@ -98,7 +91,6 @@ class RawProcessing():
             partition_cols = ['city', 'month', 'day', 'year']
 
             self.df_to_parquet(df, partition_cols, self.aws_bucket_target, self.db, self.tb)
-            # self.start_crawler(self.crawler_name)
 
 if __name__ == '__main__':
     process = RawProcessing()
