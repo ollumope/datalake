@@ -33,4 +33,6 @@ class CreateBucket(Construct):
                     )
         return bucket
     
+    def _bucket(self):
+        return self.bucket
 

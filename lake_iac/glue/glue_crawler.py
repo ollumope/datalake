@@ -23,6 +23,7 @@ class GlueCrawler(Construct):
 
         super().__init__(scope, id, **kwargs)
         self.create_crawler(id, role, db_name, tb_name, desc, bucket)
+        self.name = id
 
     def create_crawler(self, id, role, db_name, tb_name, desc, bucket):
         cfn_crawler = glue.CfnCrawler(

@@ -13,11 +13,11 @@ class LambdaFunction(Construct):
         job_name:str,
         role_arn:str,
         logger:logging.Logger,
-        event_id:str,
-        bucket_raw:str,
+        bucket_raw,
         bucket_stage:str,
         db_name:str,
         tb_name:str,
+        crawler_name:str,
         **kwargs):
 
         super().__init__(scope, identifier, **kwargs)
@@ -38,15 +38,19 @@ class LambdaFunction(Construct):
         self.function_name = f"initialize-{job_name}"
         environment_variables = {
             'GLUE_JOB_NAME': job_name,
-            'BUCKET_RAW':bucket_raw,
+            'BUCKET_RAW':bucket_raw.bucket_name,
             'BUCKET_STAGE':bucket_stage,
             'DATABASE_NAME':db_name,
-            'TABLE_NAME':tb_name
+            'TABLE_NAME':tb_name,
+            'CRAWLER_NAME': crawler_name
             }
         logger.info(f'Creating lambda for glue job execution')
         lambda_fn = self.create_lambda_function(self.function_name, lambda_code_path, lambda_data, environment_variables)
-        self.create_event(event_id, bucket_raw, lambda_fn)
-
+        lambda_fn.add_event_source(
+            cdk.aws_lambda_event_sources.S3EventSource(
+                bucket=bucket_raw._bucket(),
+                events=[cdk.aws_s3.EventType.OBJECT_CREATED])
+        )
     def create_lambda_function(self, lambda_function_handler_name,
                                script_location, data,
                                environment_variables) -> cdk.aws_lambda.Function:
@@ -71,26 +75,3 @@ class LambdaFunction(Construct):
             description='Glob job initialization'
         )
         return lambda_template
-
-    def create_event(self, identifier, bucket_raw, lambda_fn):
-        self.log.info("Create envent pattern for s3")
-        event_pattern = cdk.aws_events.EventPattern(
-            source=["aws.s3"],
-            detail_type=["Object Created"],
-            detail={
-                "bucket": [f"{bucket_raw}"]
-                }
-            )
-
-        self.log.info("Create rule")
-        event_rule = cdk.aws_events.Rule(
-            self,
-            id=identifier,
-            description="Rule to detect when a new file came into s3 bucket",
-            event_pattern=event_pattern,
-            rule_name=identifier)
-
-        self.log.info("Add event rule target")
-        event_rule.add_target(cdk.aws_events_targets.LambdaFunction(
-            lambda_fn))
-

@@ -19,7 +19,7 @@ logging.info('Account ID: %s', aws_account_id)
 
 LakeStack(
     app,
-    "LakeStack",
+    "DataLakeStack",
     env=env,
     aws_region=aws_region,
     aws_account_id=aws_account_id,

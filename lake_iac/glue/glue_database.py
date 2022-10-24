@@ -89,7 +89,7 @@ class GlueArtifacts(Construct):
         ))
         return cfn_database
 
-    def create_table(self, tb_name, db_name, partition_keys, columns, s3_bucket, account_id):
+    def create_table(self, tb_name, db_name, partition_keys, columns, s3_bucket_name, account_id):
         cfn_table = glue.CfnTable(
             self,
             id=tb_name,
@@ -98,10 +98,19 @@ class GlueArtifacts(Construct):
             table_input=glue.CfnTable.TableInputProperty(
                 partition_keys=partition_keys,
                 name=tb_name,
+                table_type="EXTERNAL_TABLE",
                 storage_descriptor=glue.CfnTable.StorageDescriptorProperty(
                     columns=columns,
-                    location=s3_bucket,
-                    output_format='PARQUET'
-                    ))
+                    location=f's3://{s3_bucket_name}',
+                    input_format='org.apache.hadoop.hive.ql.io.parquet.MapredParquetInputFormat',
+                    output_format='org.apache.hadoop.hive.ql.io.parquet.MapredParquetOutputFormat',
+                    serde_info=glue.CfnTable.SerdeInfoProperty(
+                        name="SerDe",
+                        parameters={'serialization.format':1},
+                        serialization_library="org.apache.hadoop.hive.ql.io.parquet.serde.ParquetHiveSerDe"
+                        )
+                    )
+            )
         )
         return cfn_table
+

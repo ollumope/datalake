@@ -24,37 +24,21 @@ class CreatePermission(Construct):
             cdk.aws_iam.PolicyStatement(
                 effect = cdk.aws_iam.Effect.ALLOW,
                 actions = [
-                    "glue:*",
-                    "s3:GetBucketLocation",
-                    "s3:ListBucket",
-                    "s3:ListAllMyBuckets",
-                    "s3:GetBucketAcl",
-                    "iam:ListRolePolicies",
-                    "iam:GetRole",
-                    "iam:GetRolePolicy",
+                    "s3:*",
+                    "s3-object-lambda:*",
+                    "glue:StartJobRun",
                     "logs:CreateLogGroup",
                     "logs:PutLogEvents",
-                    "s3:GetObject",
-                    "s3:PutObject",
-                    "s3:DeleteObject",
-                    "logs:CreateLogStream",
-                    "logs:PutLogEvents",
-                    "glue:StartJobRun",
+                    "glue:*"
                 ],
-                resources = ['*']
-            ))
-        self.role.add_to_policy(
-            cdk.aws_iam.PolicyStatement(
-                effect = cdk.aws_iam.Effect.ALLOW,
-                actions = [
-                    "s3:GetObject",
-                    "s3:PutObject"
-                ],
-                resources = ["arn:aws:s3:::olmontoy-lake-stage*",]
+                resources = [
+                    "*",
+                    "arn:aws:s3:::olmontoy-lake-stage*"
+                    ]
             )
         )
         self.role_arn = self.role.role_arn
-        f'arn:aws:iam::{aws_account_id}:role/service-role/{identifier}'
+        f'arn:aws:iam::{aws_account_id}:role/{identifier}'
     
     def create_iam_role(self, id, role_desc, service_ppal):
         '''Create role for a services
@@ -70,6 +54,11 @@ class CreatePermission(Construct):
             role_name=id,
             description=role_desc,
             assumed_by=cdk.aws_iam.ServicePrincipal(service_ppal),
+            managed_policies=[
+                cdk.aws_iam.ManagedPolicy.from_aws_managed_policy_name(
+                'service-role/AWSGlueServiceRole'),
+            ]
+
         )
         cdk.Tags.of(scope=role).add(
                     "service", "security"

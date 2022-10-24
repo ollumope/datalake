@@ -15,11 +15,13 @@ class RawProcessing():
             ['aws_bucket_source',
             'aws_bucket_target',
             'database',
-            'table'])
+            'table',
+            'crawler_name'])
         self.s3_resource = boto3.resource('s3')
         self.glue_client = boto3.client('glue')
         self.aws_bucket_source = args['aws_bucket_source']
         self.aws_bucket_target = args['aws_bucket_target']
+        self.crawler_name = args['crawler_name']
         self.boto_session = boto3.session.Session(region_name='us-east-1')
         self.db = args['database']
         self.tb = args['table']
@@ -33,7 +35,7 @@ class RawProcessing():
         :param filename: name used for file
         """
         wr.s3.to_parquet(
-            dataframe,
+            df=dataframe,
             path=f's3://{aws_bucket}',
             index=False,
             compression='snappy',
@@ -44,7 +46,8 @@ class RawProcessing():
             catalog_versioning=True,
             mode='overwrite_partitions',
             database=db,
-            table=tb
+            table=tb,
+            table_type='EXTERNAL_TABLE'
             )
 
     def read_csv_s3(self, aws_bucket, filename, sep=','):
@@ -95,7 +98,7 @@ class RawProcessing():
             partition_cols = ['city', 'month', 'day', 'year']
 
             self.df_to_parquet(df, partition_cols, self.aws_bucket_target, self.db, self.tb)
-            self.start_crawler('uber_v2')
+            # self.start_crawler(self.crawler_name)
 
 if __name__ == '__main__':
     process = RawProcessing()

@@ -14,6 +14,7 @@ bucket_raw = os.environ['BUCKET_RAW']
 bucket_stage = os.environ['BUCKET_STAGE']
 dabase_name = os.environ['DATABASE_NAME']
 table_name = os.environ['TABLE_NAME']
+crawler_name = os.environ['CRAWLER_NAME']
 
 # Define Lambda function
 def lambda_handler(event, context):
@@ -24,7 +25,8 @@ def lambda_handler(event, context):
                  '--aws_bucket_source': bucket_raw,
                  '--aws_bucket_target': bucket_stage,
                  '--database': dabase_name,
-                 '--table': table_name}
+                 '--table': table_name,
+                 '--crawler_name':crawler_name}
         )
     logger.info('Started....' + glueJobName)
     return response

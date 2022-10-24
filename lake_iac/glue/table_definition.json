@@ -2,53 +2,53 @@
     "description": "Uber Movement's Travel Times provides cities average travel time calculations between two zones in a region for a given time and date",
     "location_prefix": "/",
     "columns": [
-        {"name": "Origin Movement ID",
+        {"name": "origin_movement_id",
             "type":"string",
             "comment":"Origin Movement ID",
             "partition":false
         },
-        {"name": "Origin Display Name",
+        {"name": "origin_display_name",
             "type":"string",
             "comment":"",
             "partition":false
         },
-        {"name": "Origin Geometry",
+        {"name": "origin_geometry",
             "type":"string",
             "comment":"Origin Display Name",
             "partition":false
         },
-        {"name": "Destination Movement ID",
+        {"name": "destination_movement_id",
             "type":"string",
             "comment":"Destination Movement ID",
             "partition":false
         },
-        {"name": "Destination Display Name",
+        {"name": "destination_display_name",
             "type":"string",
             "comment":"Destination Display Name",
             "partition":false
         },
-        {"name": "Destination Geometry",
+        {"name": "destination_geometry",
             "type":"string",
             "comment":"Destination Geometry",
             "partition":false
         },
-        {"name": "Date Range",
+        {"name": "date_range",
             "type":"string",
             "comment":"Date Range",
             "partition":false
         },
-        {"name": "Mean Travel Time (Seconds)",
+        {"name": "mean_travel_time_seconds",
             "type":"float",
             "comment":"Mean Travel Time (Seconds)",
             "partition":false
         },
-        {"name": "Range - Lower Bound Travel Time (Seconds)",
+        {"name": "range_lower_bound_travel_time_seconds_",
             "type":"float",
             "comment":"Range - Lower Bound Travel Time (Seconds)",
             "partition":false
         },
         {
-            "name": "Range - Upper Bound Travel Time (Seconds)",
+            "name": "range_upper_bound_travel_time_seconds",
             "type":"float",
             "comment":"Range - Upper Bound Travel Time (Seconds)",
             "partition":false
