@@ -1,9 +1,3 @@
-"""
-Glue:
-Includes the database and definition for datalake storage
-Classes:
-    GlueJobs
-"""
 import logging
 import json
 import os
@@ -29,6 +23,15 @@ class GlueJobs(Construct):
         self.job_name = job.name
 
     def create_job(self, id, script_loc, role):
+        '''
+        Function to create glue job
+        input:
+            id: Identifier for glue job
+            script_loc: Job file s3 path
+            role: Role arn
+        output:
+            cfn_job: Glue job object
+        '''
         cfn_job = glue.CfnJob(
             self, 
             name=id,

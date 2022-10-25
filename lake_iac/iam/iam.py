@@ -33,7 +33,9 @@ class CreatePermission(Construct):
                 ],
                 resources = [
                     "*",
-                    "arn:aws:s3:::olmontoy-lake-stage*"
+                    "arn:aws:s3:::olmontoy-lake-stage*",
+                    "arn:aws:logs:us-east-1:081900802975:*",
+                    "arn:aws:logs:us-east-1:081900802975:log-group:/aws/lambda/*"
                     ]
             )
         )
@@ -47,7 +49,7 @@ class CreatePermission(Construct):
             role_desc: role description
             service_ppal:  The IAM principal which can assume this role
         output:
-            role definition'''
+            role object definition'''
         role = cdk.aws_iam.Role(
             self,
             id=id,
@@ -60,7 +62,4 @@ class CreatePermission(Construct):
             ]
 
         )
-        cdk.Tags.of(scope=role).add(
-                    "service", "security"
-                    )
         return role

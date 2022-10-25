@@ -18,8 +18,7 @@ class CreateBucket(Construct):
         '''Function to create a aws S3 bucket
         input:
             id: AWS S3 bucket name and identifier
-        output:
-            bucket definition'''
+        '''
         logging.info('Creating s3 bucket ', id)
         bucket = cdk.aws_s3.Bucket(
             self,
@@ -28,11 +27,8 @@ class CreateBucket(Construct):
             block_public_access=cdk.aws_s3.BlockPublicAccess.BLOCK_ALL,
             versioned=True
         )
-        cdk.Tags.of(scope=bucket).add(
-                    "service", "storage"
-                    )
         return bucket
     
     def _bucket(self):
+        '''Function to return bucket Object'''
         return self.bucket
-

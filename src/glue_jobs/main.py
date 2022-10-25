@@ -1,6 +1,4 @@
 import boto3
-import io
-import logging
 import os
 import sys
 import awswrangler as wr
@@ -27,11 +25,16 @@ class RawProcessing():
 
     def df_to_parquet(self, dataframe, partition_cols, aws_bucket, db, tb):
         """
-        Save a Parquet file in S3.
-        :param dataframe: 
-        :param s3: s3 resouce
-        :param aws_bucket: bucket where information is putting
-        :param filename: name used for file
+        Save a pandas dataframe data in S3 with
+        Parquet format whit snappy compression.
+        Catalog data into Glue table
+        Inputs:
+            dataframe: data to save in pandas dataframe
+            partition_cols: list of columns to create a partition data
+            aws_bucket: bucket where information is storage
+            db: database where data is cataloged
+            tb: table where data is putting
+
         """
         wr.s3.to_parquet(
             df=dataframe,
@@ -49,6 +52,15 @@ class RawProcessing():
             )
 
     def read_csv_s3(self, aws_bucket, filename, sep=','):
+        '''
+        Read a comma-separated values (csv) file into DataFrame and save it into S3
+        Input:
+            aws_bucket: s3 bucket where information is storage
+            filename: file name in format csv who has the information
+            sep: file separator
+        Output:
+            df: Conversion csv file into dataframe.        
+        '''
         df = wr.s3.read_csv(
             path=f's3://{aws_bucket}/{filename}', 
             sep=sep, 
@@ -59,11 +71,8 @@ class RawProcessing():
 
     def processing_data(self):
         """
-        Save a Parquet file in S3.
-        :param dataframe: 
-        :param s3: s3 resouce
-        :param aws_bucket: bucket where information is putting
-        :param filename: name used for file
+        Orchestration process
+        Cleaning and transform data
         """
         for obj in self.s3_resource.Bucket(self.aws_bucket_source).objects.all():
             file_name = obj.key

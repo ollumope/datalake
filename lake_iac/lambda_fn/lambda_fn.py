@@ -28,12 +28,10 @@ class LambdaFunction(Construct):
         # lambda code local
         lambda_code_path = f'{base_path}/src/lambda/'
 
-        # Loading and parsing "definition" for Lambda function file.
         self.log.info(f"Loading Lambda definition:{lambda_def_path}")
         with open(lambda_def_path, "rb") as file:
             lambda_data = json.load(file)
         
-        # Lambda varialbes
         self.function_name = f"initialize-{job_name}"
         environment_variables = {
             'GLUE_JOB_NAME': job_name,
@@ -44,14 +42,27 @@ class LambdaFunction(Construct):
             }
         logger.info(f'Creating lambda for glue job execution')
         lambda_fn = self.create_lambda_function(self.function_name, lambda_code_path, lambda_data, environment_variables)
+
+        self.log.info(f"Adding lambda s3 event")
         lambda_fn.add_event_source(
             cdk.aws_lambda_event_sources.S3EventSource(
                 bucket=bucket_raw._bucket(),
                 events=[cdk.aws_s3.EventType.OBJECT_CREATED])
         )
+
     def create_lambda_function(self, lambda_function_handler_name,
                                script_location, data,
                                environment_variables) -> cdk.aws_lambda.Function:
+        '''
+        Function to create lambda function
+        Input:
+            lambda_function_handler_name: id and description
+            script_location: script local path
+            data: lambda definition (version, memory)
+            environment_variables: environment variables
+        Output:
+            lambda_template: Lambda object definition
+        '''
         property_python_version = data['property_python_version']
         memory_size = data['memory_size']
         timeout = data['timeout']

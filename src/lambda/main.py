@@ -18,6 +18,9 @@ crawler_name = os.environ['CRAWLER_NAME']
 
 # Define Lambda function
 def lambda_handler(event, context):
+    '''
+    Lambda handler to start a Glue job
+    '''
     logger.info('Initializa by event')
     response = client.start_job_run(
         JobName = glueJobName,
