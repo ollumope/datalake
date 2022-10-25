@@ -13,8 +13,7 @@ class RawProcessing():
             ['aws_bucket_source',
             'aws_bucket_target',
             'database',
-            'table',
-            'crawler_name'])
+            'table'])
         self.s3_resource = boto3.resource('s3')
         self.glue_client = boto3.client('glue')
         self.aws_bucket_source = args['aws_bucket_source']

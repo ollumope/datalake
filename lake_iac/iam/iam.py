@@ -34,8 +34,8 @@ class CreatePermission(Construct):
                 resources = [
                     "*",
                     "arn:aws:s3:::olmontoy-lake-stage*",
-                    "arn:aws:logs:us-east-1:081900802975:*",
-                    "arn:aws:logs:us-east-1:081900802975:log-group:/aws/lambda/*"
+                    f"arn:aws:logs:us-east-1:{aws_account_id}:*",
+                    f"arn:aws:logs:us-east-1:{aws_account_id}:log-group:/aws/lambda/*"
                     ]
             )
         )
