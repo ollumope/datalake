@@ -38,7 +38,7 @@ After downloading GitHub repository
 - Create and activate a virtual environment `source .venv/bin/activate`
 - Install all dependencies `pip install -r requirements.txt`
 - `cdk synth` to prepare AWS account executing the app
-- `cdk deploy` to deploy the **LakeStack** stack
+- `make deploy` to deploy the **LakeStack** stack. **Important** to use the make file instead so it coordinates the whole stack provisioning. 
 
 ## Future Work
 - Improve security configuring like VPC, AWS ACL and IAM Roles restricted.
