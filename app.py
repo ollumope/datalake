@@ -21,7 +21,6 @@ LakeStack(
     app,
     "DataLakeStack",
     env=env,
-    aws_region=aws_region,
     aws_account_id=aws_account_id,
     logging = logger
     )
