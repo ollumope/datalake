@@ -1,6 +1,6 @@
-# Loka Lake Challenge
+# Data Lake Challenge
 
-The solution for the Loka data lake challenge uses a serverless approach to leverage administrated services. It would be the equivalent of the T step on an ETL pipeline architecture.
+The solution for the data lake challenge uses a serverless approach to leverage administrated services. It would be the equivalent of the T step on an ETL pipeline architecture.
 
 To reduce the maintenance burden and to provide a solution that works out of the box, The following services are in place: 
 * S3 for storage services for both the source and the target data
@@ -27,7 +27,7 @@ For debugging purposes, logs are available in Cloudwatch.
 Finally, any data processed will be immediately available in an Athena table, which provides an SQL interface for users to consume the data. 
 
 
-## How to execute the solution
+## How to execute the solution using CDK from AWS
 
 Prerequisites:
 - AWS account
@@ -38,7 +38,20 @@ After downloading GitHub repository
 - Create and activate a virtual environment `source .venv/bin/activate`
 - Install all dependencies `pip install -r requirements.txt`
 - `cdk synth` to prepare AWS account executing the app
-- `make deploy` to deploy the **LakeStack** stack. **Important** to use the make file instead so it coordinates the whole stack provisioning. 
+- `make deploy` to deploy the **LakeStack** stack. **Important** to use the make file instead so it coordinates the whole stack provisioning.
+
+## How to execute the solution using Terraform
+
+Prerequisites:
+- AWS account
+- Programmatic keys configuration
+
+After downloading GitHub repository
+- Create and activate a virtual environment `source .venv/bin/activate`
+- Install all dependencies `pip install -r requirements.txt`
+- `terraform init`
+- `terraform plan`
+- `terraform apply`
 
 ## Future Work
 - Improve security configuring like VPC, AWS ACL and IAM Roles restricted.

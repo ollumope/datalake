@@ -1,0 +1,79 @@
+{
+    "columns": [
+        {   "name": "origin_movement_id",
+            "type":"string",
+            "comment":"Origin Movement ID",
+            "partition":false
+        },
+        {"name": "origin_display_name",
+            "type":"string",
+            "comment":"",
+            "partition":false
+        },
+        {"name": "origin_geometry",
+            "type":"string",
+            "comment":"Origin Display Name",
+            "partition":false
+        },
+        {"name": "destination_movement_id",
+            "type":"string",
+            "comment":"Destination Movement ID",
+            "partition":false
+        },
+        {"name": "destination_display_name",
+            "type":"string",
+            "comment":"Destination Display Name",
+            "partition":false
+        },
+        {"name": "destination_geometry",
+            "type":"string",
+            "comment":"Destination Geometry",
+            "partition":false
+        },
+        {"name": "date_range",
+            "type":"string",
+            "comment":"Date Range",
+            "partition":false
+        },
+        {"name": "mean_travel_time_seconds",
+            "type":"float",
+            "comment":"Mean Travel Time (Seconds)",
+            "partition":false
+        },
+        {"name": "range_lower_bound_travel_time_seconds_",
+            "type":"float",
+            "comment":"Range - Lower Bound Travel Time (Seconds)",
+            "partition":false
+        },
+        {
+            "name": "range_upper_bound_travel_time_seconds",
+            "type":"float",
+            "comment":"Range - Upper Bound Travel Time (Seconds)",
+            "partition":false
+        },
+        {
+            "name": "city",
+            "type":"string",
+            "comment":"file city",
+            "partition":true
+        },
+        {
+            "name": "month",
+            "type":"string",
+            "comment":"Month of first range date",
+            "partition":true
+        },
+        {
+            "name": "day",
+            "type":"string",
+            "comment":"Day of first range date",
+            "partition":true
+        },
+        {
+            "name": "year",
+            "type":"string",
+            "comment":"Year of first range date",
+            "partition":true
+        }
+    ]
+  }

@@ -5,6 +5,9 @@ __pycache__
 .venv
 *.egg-info
 .DS_Store
+.terraform*
+terraform.tfstate*
+*.zip
 
 # CDK asset staging directory
 .cdk.staging
